@@ -16,12 +16,12 @@
     "irc-upd": "^0.11.0",
     "socket.io": "^4.7.1",
     "tmi": "^2.0.0",
-    "tmi.js": "^1.8.5"
+    "tmi.js": "^1.8.5",
+    "tsc": "^2.0.4",
+    "typescript": "^5.1.5"
   },
   "devDependencies": {
     "@types/express": "^4.17.17",
-    "@types/tmi.js": "^1.8.3",
-    "tsc": "^2.0.4",
-    "typescript": "^5.1.5"
+    "@types/tmi.js": "^1.8.3"
   }
 }
