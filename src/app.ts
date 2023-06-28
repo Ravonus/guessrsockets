@@ -41,8 +41,6 @@ client.on('message', (channel, userstate, message, self) => {
         : false;
     //emit to just being
 
-    console.log('Emitting to ' + begin);
-
     io.emit('azuki', {
       user: userstate['display-name'],
       isAzuki,
