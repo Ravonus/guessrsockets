@@ -2,8 +2,6 @@ import tmi from 'tmi.js';
 import env from 'dotenv';
 import { io } from './server'; // Import the io instance
 
-import { begin } from './server';
-
 env.config();
 
 const options = {
@@ -16,10 +14,10 @@ const options = {
     username: process.env.TWITCH_USER,
     password: process.env.TWITCH_OAUTH,
   },
-  channels: [process.env.TWITCH_CHANNEL as string],
+  channels: [],
 };
 
-const client = tmi.client(options);
+export const client = tmi.client(options);
 
 client.connect();
 
@@ -31,7 +29,8 @@ client.on('message', (channel, userstate, message, self) => {
     message.toLowerCase().includes('1')
   ) {
     console.log(
-      'Azuki or Elemental was mentioned by ' + userstate['display-name']
+      'Azuki or Elemental was mentioned by ' + userstate['display-name'],
+      channel
     );
 
     const isAzuki =
@@ -40,8 +39,8 @@ client.on('message', (channel, userstate, message, self) => {
         ? true
         : false;
     //emit to just being
-
-    io.emit('azuki', {
+    const socket = channel.replace('#', '');
+    io.emit(socket, {
       user: userstate['display-name'],
       isAzuki,
     });

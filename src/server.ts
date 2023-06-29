@@ -2,10 +2,10 @@ import express from 'express';
 import http from 'http';
 import { Server } from 'socket.io';
 
+import { client } from './app';
+
 const app = express();
 const server = http.createServer(app);
-
-export let begin = '';
 
 const io = new Server(server, {
   cors: {
@@ -15,9 +15,24 @@ const io = new Server(server, {
 });
 
 io.on('connection', (socket) => {
-  begin = socket.id;
+  //check url to see which twitch channel to join/and push too
 
-  console.log('a user connected');
+  const url = socket.handshake.headers.referer;
+  if (!url) return console.log('no url');
+  console.log(socket.handshake.query);
+  let user: string = socket.handshake.query.twitch as string;
+
+  if (!user) return socket.disconnect;
+
+  // const twitch = url.split('?')[1].split('=')[1];
+  // console.log('TWITCH CHANNEL: ');
+  // console.log(twitch);
+
+  console.log('a user connected', user);
+
+  //join channel
+  client.join(`#${user}`);
+
   socket.on('disconnect', () => {
     console.log('user disconnected');
   });
