@@ -31,7 +31,8 @@ io.on('connection', (socket) => {
   console.log('a user connected', user);
 
   //join channel
-  client.join(`#${user}`);
+
+  client.join(`#${user}`).catch((err) => console.log(err));
 
   socket.on('disconnect', () => {
     console.log('user disconnected');
