@@ -28,17 +28,12 @@ client.on('message', (channel, userstate, message, self) => {
     message.toLowerCase().includes('0') ||
     message.toLowerCase().includes('1')
   ) {
-    console.log(
-      'Azuki or Elemental was mentioned by ' + userstate['display-name'],
-      channel
-    );
-
     const isAzuki =
       message.toLowerCase().includes('azuki') ||
       message.toLowerCase().includes('0')
         ? true
         : false;
-    //emit to just being
+
     const socket = channel.replace('#', '');
     io.emit(socket, {
       user: userstate['display-name'],

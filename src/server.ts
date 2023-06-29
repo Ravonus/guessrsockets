@@ -15,22 +15,12 @@ const io = new Server(server, {
 });
 
 io.on('connection', (socket) => {
-  //check url to see which twitch channel to join/and push too
-
   const url = socket.handshake.headers.referer;
-  if (!url) return console.log('no url');
-  console.log(socket.handshake.query);
+  if (!url) return socket.disconnect();
+
   let user: string = socket.handshake.query.twitch as string;
 
   if (!user) return socket.disconnect;
-
-  // const twitch = url.split('?')[1].split('=')[1];
-  // console.log('TWITCH CHANNEL: ');
-  // console.log(twitch);
-
-  console.log('a user connected', user);
-
-  //join channel
 
   client.join(`#${user}`).catch((err) => console.log(err));
 
@@ -44,4 +34,4 @@ server.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
 });
 
-export { io }; // Export the io instance
+export { io };
